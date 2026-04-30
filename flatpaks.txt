@@ -58,7 +58,6 @@ org.mozilla.Thunderbird
 org.mozilla.firefox
 org.pulseaudio.pavucontrol
 org.qbittorrent.qBittorrent
-org.vanillaos.ApxGUI
 page.codeberg.censor.Censor
 page.codeberg.libre_menu_editor.LibreMenuEditor
 page.tesk.Refine
