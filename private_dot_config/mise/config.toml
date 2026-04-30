@@ -1,3 +1,10 @@
+[tools]
+node = "latest"
+bun = "latest"
+pnpm = "latest"
+rust = "latest"
+java = "temurin-21"
+
 [tasks."install-jetbrains-toolbox"]
 description = "Fetch and install the latest JetBrains Toolbox binary"
 run = "~/.local/bin/install-jetbrains-toolbox.sh"
