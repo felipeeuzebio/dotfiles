@@ -1,2 +1,7 @@
 # Cursor state files
 .cursor/hooks/state
+
+# Python project artifacts
+scripts/.venv
+scripts/__pycache__
+scripts/*.pyc
