@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-#MISE description="Interactive TUI to select and install Flatpak applications"
-set -euo pipefail
-SCRIPTS_DIR="$(chezmoi source-path)/scripts"
-uv run --project "$SCRIPTS_DIR" "$SCRIPTS_DIR/install-flatpaks.py"
