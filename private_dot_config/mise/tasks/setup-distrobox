@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+#MISE description="Assemble containers from the ini manifest"
+set -euo pipefail
+distrobox assemble create --file ~/distrobox.ini

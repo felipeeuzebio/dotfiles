@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+#MISE description="Install Brave browser via the official curl install script"
+set -euo pipefail
+exec "$HOME/.local/bin/install-brave.sh"

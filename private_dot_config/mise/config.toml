@@ -4,15 +4,5 @@ bun = "latest"
 pnpm = "latest"
 rust = "latest"
 java = "temurin-21"
-
-[tasks."install-jetbrains-toolbox"]
-description = "Fetch and install the latest JetBrains Toolbox binary"
-run = "~/.local/bin/install-jetbrains-toolbox.sh"
-
-[tasks."setup-distrobox"]
-description = "Assemble containers from the ini manifest"
-run = "distrobox assemble create --file ~/distrobox.ini"
-
-[tasks."install-brave"]
-description = "Install Brave browser via the official curl install script"
-run = "~/.local/bin/install-brave.sh"
+python = "3.15"
+uv = "latest"
