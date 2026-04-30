@@ -1,0 +1,7 @@
+[tasks."install-jetbrains-toolbox"]
+description = "Fetch and install the latest JetBrains Toolbox binary"
+run = "~/.local/bin/install-jetbrains-toolbox.sh"
+
+[tasks."setup-distrobox"]
+description = "Assemble containers from the ini manifest"
+run = "distrobox assemble create --file ~/distrobox.ini"
