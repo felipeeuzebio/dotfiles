@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+#MISE description="Install Flatpaks from ~/flatpaks.txt (app<TAB>remote per line)"
+set -euo pipefail
+exec "$HOME/.local/bin/install-flatpaks.sh"
