@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+#MISE description="Install pacman/AUR packages from ~/arch-packages.txt (via paru)"
+set -euo pipefail
+exec "$HOME/.local/bin/install-arch-packages.sh"
