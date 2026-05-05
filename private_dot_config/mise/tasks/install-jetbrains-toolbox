@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-#MISE description="Fetch and install the latest JetBrains Toolbox binary"
-set -euo pipefail
-exec "$HOME/.local/bin/install-jetbrains-toolbox.sh"
