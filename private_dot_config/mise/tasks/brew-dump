@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-#MISE description="Dump installed packages into Brewfile"
-set -euo pipefail
-brew bundle dump --describe --force --file=~/Brewfile

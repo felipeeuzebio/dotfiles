@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-#MISE description="Install all packages, casks, flatpaks and VS Code extensions from Brewfile"
-set -euo pipefail
-brew bundle --file ~/Brewfile
