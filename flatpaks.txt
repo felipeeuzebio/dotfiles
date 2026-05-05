@@ -1,0 +1,17 @@
+be.alexandervanhee.gradia	flathub
+com.github.PintaProject.Pinta	flathub
+com.ranfdev.DistroShelf	flathub
+de.leopoldluley.Clapgrep	flathub
+dev.deedles.Trayscale	flathub
+io.beekeeperstudio.Studio	flathub
+io.github.flattool.Ignition	flathub
+io.github.flattool.Warehouse	flathub
+io.github.getnf.embellish	flathub
+io.github.kolunmi.Bazaar	flathub
+io.github.mfat.sshpilot	flathub
+it.mijorus.gearlever	flathub
+it.mijorus.smile	flathub
+me.iepure.devtoolbox	flathub
+page.codeberg.censor.Censor	flathub
+page.codeberg.libre_menu_editor.LibreMenuEditor	flathub
+page.tesk.Refine	flathub
