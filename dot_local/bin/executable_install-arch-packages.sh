@@ -31,7 +31,7 @@ comm -12 <(pacman -Slq | sort) <(sort "$MANIFEST") \
 # repos) let paru use AUR info lookups instead of fuzzy search, so no
 # disambiguation menu appears. Batching lets paru resolve shared deps once
 # and build in the optimal order.
-comm -23 <(pacman -Slq | sort) <(sort "$MANIFEST") \
+comm -13 <(pacman -Slq | sort) <(sort "$MANIFEST") \
     | xargs -r paru -S --needed --noconfirm
 
 printf "${GREEN}Arch package installs finished.${NC}\n"
