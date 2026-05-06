@@ -58,6 +58,7 @@ fi
 
 step "Applying chezmoi from ${REPO}..."
 chezmoi init --apply "$REPO"
+chezmoi update
 
 step "Making mise tasks executable..."
 chmod +x ~/.config/mise/tasks/setup-distrobox
