@@ -17,7 +17,6 @@ mission-center
 obs-studio
 pavucontrol
 podman-desktop
-python-yaml
 qbittorrent
 rust
 rustdesk
