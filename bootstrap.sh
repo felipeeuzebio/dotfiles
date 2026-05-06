@@ -59,6 +59,9 @@ fi
 step "Applying chezmoi from ${REPO}..."
 chezmoi init --apply "$REPO"
 
+step "Making mise tasks executable..."
+chmod +x ~/.config/mise/tasks/setup-distrobox
+
 step "Installing Arch packages..."
 mise run install-arch-packages
 
