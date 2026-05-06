@@ -27,9 +27,11 @@ printf "${BLUE}Installing packages from %s...${NC}\n" "$MANIFEST"
 comm -12 <(pacman -Slq | sort) <(sort "$MANIFEST") \
     | xargs -r sudo pacman -S --needed --noconfirm
 
-# AUR packages — one at a time so paru performs an exact-name lookup
-# instead of a fuzzy search that triggers a disambiguation menu.
+# AUR packages — all at once. Exact names (already filtered from official
+# repos) let paru use AUR info lookups instead of fuzzy search, so no
+# disambiguation menu appears. Batching lets paru resolve shared deps once
+# and build in the optimal order.
 comm -23 <(pacman -Slq | sort) <(sort "$MANIFEST") \
-    | xargs -rI {} paru -S --needed --noconfirm {}
+    | xargs -r paru -S --needed --noconfirm
 
 printf "${GREEN}Arch package installs finished.${NC}\n"
