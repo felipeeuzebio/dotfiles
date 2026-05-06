@@ -21,6 +21,15 @@ if [ ! -f "$MANIFEST" ]; then
     exit 1
 fi
 
-printf "${BLUE}Installing packages from %s (paru)...${NC}\n" "$MANIFEST"
-xargs paru -S --needed --noconfirm < "$MANIFEST"
+printf "${BLUE}Installing packages from %s...${NC}\n" "$MANIFEST"
+
+# Official repo packages — install all at once with pacman.
+pacman -Slq | grep -Fxf  - "$MANIFEST" | xargs -r sudo pacman -S --needed --noconfirm
+
+# AUR packages — all at once. Exact names (already filtered from official
+# repos) let paru use AUR info lookups instead of fuzzy search, so no
+# disambiguation menu appears. Batching lets paru resolve shared deps once
+# and build in the optimal order.
+pacman -Slq | grep -Fxvf - "$MANIFEST" | xargs -r paru -S --needed --noconfirm
+
 printf "${GREEN}Arch package installs finished.${NC}\n"
