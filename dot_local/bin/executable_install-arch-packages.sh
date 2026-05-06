@@ -5,6 +5,7 @@ set -euo pipefail
 BLUE='\033[0;34m'
 GREEN='\033[0;32m'
 RED='\033[0;31m'
+YELLOW='\033[0;33m'
 NC='\033[0m'
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -24,6 +25,27 @@ fi
 printf "${BLUE}Installing packages from %s (paru)...${NC}\n" "$MANIFEST"
 while IFS= read -r pkg || [[ -n "$pkg" ]]; do
     [[ -z "$pkg" ]] && continue
-    paru -S --needed --noconfirm "$pkg"
+
+    # Skip if already installed.
+    if pacman -Qi "$pkg" &>/dev/null; then
+        continue
+    fi
+
+    # Try paru and verify the exact package was installed afterwards.
+    # --noconfirm silently picks option 1 when paru shows a provider
+    # disambiguation menu, which may not match the requested package name.
+    if ! paru -S --needed --noconfirm "$pkg" || ! pacman -Qi "$pkg" &>/dev/null; then
+        printf "${YELLOW}paru did not install %s; retrying via direct AUR clone...${NC}\n" "$pkg" >&2
+        _tmpdir="$(mktemp -d)"
+        git clone --depth=1 "https://aur.archlinux.org/${pkg}.git" "${_tmpdir}"
+        # Remove any conflicting packages declared in the PKGBUILD.
+        mapfile -t _conflicts < <(bash -c "cd '${_tmpdir}' && . ./PKGBUILD 2>/dev/null && printf '%s\n' \"\${conflicts[@]:-}\"")
+        for _c in "${_conflicts[@]:-}"; do
+            [[ -z "${_c}" ]] && continue
+            pacman -Qi "${_c}" &>/dev/null && sudo pacman -R --noconfirm "${_c}" || true
+        done
+        (cd "${_tmpdir}" && makepkg -si --noconfirm --needed)
+        rm -rf "${_tmpdir}"
+    fi
 done < "$MANIFEST"
 printf "${GREEN}Arch package installs finished.${NC}\n"
