@@ -19,6 +19,6 @@ pavucontrol
 podman-desktop
 qbittorrent
 rust
-rustdesk
+rustdesk-bin
 solaar
 zed
