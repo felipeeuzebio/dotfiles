@@ -6,11 +6,11 @@
 #
 # Steps:
 #   1. Verify the host is Arch-based (ID/ID_LIKE matches "arch").
-#   2. Ensure pacman prerequisites (git, base-devel) are installed.
+#   2. Install pacman prerequisites (git, base-devel) and chezmoi + mise from the
+#      Arch extra repo (no AUR needed for these core tools).
 #   3. Ensure an AUR helper (paru or yay) — bootstrap paru-bin from AUR if missing.
-#   4. Install chezmoi + mise via paru/yay.
-#   5. `chezmoi init --apply` against this repo.
-#   6. Run the package + flatpak install tasks.
+#   4. `chezmoi init --apply` against this repo.
+#   5. Run the package + flatpak install tasks.
 
 set -euo pipefail
 
@@ -36,8 +36,8 @@ case " ${ID} ${ID_LIKE} " in
     *) die "unsupported distribution: ${ID:-unknown} (Arch-based only)";;
 esac
 
-step "Installing pacman prerequisites (git, base-devel)..."
-sudo pacman -S --needed --noconfirm git base-devel
+step "Installing pacman prerequisites and core tools (git, base-devel, chezmoi, mise)..."
+sudo pacman -S --needed --noconfirm git base-devel chezmoi mise
 
 helper=""
 for h in paru yay; do
@@ -55,9 +55,6 @@ if [ -z "$helper" ]; then
     (cd "$tmp/paru-bin" && makepkg -si --noconfirm)
     helper="paru"
 fi
-
-step "Installing chezmoi and mise via ${helper}..."
-"$helper" -S --needed --noconfirm chezmoi mise
 
 step "Applying chezmoi from ${REPO}..."
 chezmoi init --apply "$REPO"

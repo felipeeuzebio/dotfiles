@@ -18,6 +18,7 @@ obs-studio
 pavucontrol
 podman-desktop
 qbittorrent
+rust
 rustdesk
 solaar
 zed

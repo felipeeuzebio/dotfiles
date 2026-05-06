@@ -2,7 +2,6 @@
 node = "latest"
 bun = "latest"
 pnpm = "latest"
-rust = "latest"
 java = "temurin-21"
-python = "3.15"
+python = "3.14"
 uv = "latest"
