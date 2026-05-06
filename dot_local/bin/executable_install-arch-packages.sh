@@ -22,5 +22,8 @@ if [ ! -f "$MANIFEST" ]; then
 fi
 
 printf "${BLUE}Installing packages from %s (paru)...${NC}\n" "$MANIFEST"
-xargs paru -S --needed --noconfirm < "$MANIFEST"
+while IFS= read -r pkg || [[ -n "$pkg" ]]; do
+    [[ -z "$pkg" ]] && continue
+    paru -S --needed --noconfirm "$pkg"
+done < "$MANIFEST"
 printf "${GREEN}Arch package installs finished.${NC}\n"
