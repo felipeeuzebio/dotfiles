@@ -3,7 +3,6 @@
 set -euo pipefail
 
 BLUE='\033[0;34m'
-CYAN='\033[0;36m'
 GREEN='\033[0;32m'
 RED='\033[0;31m'
 NC='\033[0m'
@@ -22,17 +21,16 @@ if [ ! -f "$MANIFEST" ]; then
     exit 1
 fi
 
-# Ensure Flathub exists when manifests reference it (all current entries use flathub).
-flatpak remote-add --if-not-exists flathub 'https://flathub.org/repo/flathub.flatpakrepo'
+printf "${BLUE}Installing Flatpaks from %s...${NC}\n" "$MANIFEST"
 
-printf "${BLUE}Installing Flatpaks from ${MANIFEST}...${NC}\n"
-while IFS=$'\t' read -r app remote || [ -n "${app:-}" ]; do
-    app="${app%$'\r'}"
-    remote="${remote%$'\r'}"
-    [[ -z "$app" || "$app" =~ ^[[:space:]]*# ]] && continue
-    remote="${remote:-flathub}"
-    printf "${CYAN}%s${NC} ← %s\n" "$app" "$remote"
-    flatpak install -y "$remote" "$app"
-done <"$MANIFEST"
+# For each remote in the manifest: ensure it exists, then install all its
+# apps in one call. --noninteractive suppresses the progress UI that leaks
+# ANSI cursor-position queries (^[[row;colR) into the terminal output.
+while IFS= read -r remote; do
+    [[ "$remote" == "flathub" ]] && \
+        flatpak remote-add --if-not-exists flathub 'https://flathub.org/repo/flathub.flatpakrepo'
+    mapfile -t apps < <(awk -F'\t' -v r="$remote" '$2 == r {print $1}' "$MANIFEST")
+    flatpak install --noninteractive "$remote" "${apps[@]}"
+done < <(awk -F'\t' '{print $2}' "$MANIFEST" | sort -u)
 
 printf "${GREEN}Flatpak installs finished.${NC}\n"
