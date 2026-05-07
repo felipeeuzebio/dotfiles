@@ -1,0 +1,5 @@
+# Files that live in the repo root for project purposes but should not be
+# deployed to ~/. chezmoi will not create or manage these in the home dir.
+AGENTS.md
+README.md
+bootstrap.sh
