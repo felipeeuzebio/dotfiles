@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+#MISE description="Install virt-manager + QEMU/KVM (qemu-full) and enable libvirt"
+
+set -euo pipefail
+
+BLUE='\033[0;34m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m'
+
+"${HOME}/.local/bin/check-distro.sh"
+
+PACKAGES=(qemu-full libvirt virt-manager virt-viewer dnsmasq dmidecode)
+
+printf "${BLUE}Installing virt-manager + QEMU/KVM stack...${NC}\n"
+sudo pacman -S --needed --noconfirm "${PACKAGES[@]}"
+
+printf "${BLUE}Adding %s to libvirt and kvm groups...${NC}\n" "$USER"
+sudo usermod -aG libvirt,kvm "$USER"
+
+printf "${BLUE}Enabling libvirtd.socket and autostarting default network...${NC}\n"
+sudo systemctl enable --now libvirtd.socket
+sudo virsh net-autostart default >/dev/null 2>&1 || true
+sudo virsh net-start     default >/dev/null 2>&1 || true
+
+printf "${GREEN}Done.${NC} Log out/in (or 'newgrp libvirt') for group changes.\n"
+printf "${YELLOW}Verify:${NC} run 'virsh -c qemu:///system list --all'\n"
