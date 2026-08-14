@@ -1,0 +1,4 @@
+{
+  "name": "dotfiles dev",
+  "install": "sudo apt-get update -qq && sudo apt-get install -y --no-install-recommends shellcheck && sudo sh -c \"$(curl -fsLS get.chezmoi.io)\" -- -b /usr/local/bin && curl -fsSL https://mise.run | sudo env MISE_INSTALL_PATH=/usr/local/bin/mise sh"
+}
